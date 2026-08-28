@@ -134,7 +134,7 @@ public class Loginuser extends javax.swing.JFrame {
             if (ps.next())
             {
                 JOptionPane.showMessageDialog(this,"Welcome, " + uusername);
-                Usersdashboard userdash=new Usersdashboard();
+                Usersdashboard userdash=new Usersdashboard(uusername);
                 userdash.setVisible(true);
                 this.dispose();
             }

@@ -4,7 +4,12 @@
  */
 package group.trainbooking;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,8 +22,42 @@ public class Usersdashboard extends javax.swing.JFrame {
     /**
      * Creates new form Usersdashboard
      */
+    
+    private String loguser;
+    
     public Usersdashboard() {
         initComponents();
+        
+    }
+    public Usersdashboard(String username) {
+        initComponents();
+        tableloaddata();
+        this.loguser=username;
+        
+    }
+    public void tableloaddata(){
+        DefaultTableModel table=(DefaultTableModel)trainschedule.getModel();
+        table.setRowCount(0);
+        
+        try (Connection conect = DatabaseConnection.getConnection();
+        PreparedStatement prt = conect.prepareStatement("SELECT trainno,dstart,destination,ddate,dtime,price FROM trains");
+        ResultSet abc=prt.executeQuery()){
+            
+            while(abc.next()){
+                table.addRow(new Object[]{
+                    abc.getString("trainno"),
+                    abc.getString("dstart"),
+                    abc.getString("destination"),
+                    abc.getString("ddate"),
+                    abc.getString("dtime"),
+                    abc.getString("price"),
+
+                });
+            }
+        }catch (SQLException ex){
+        logger.log(java.util.logging.Level.SEVERE, "Database connection error", ex);
+                
+        }   
     }
 
     /**
@@ -30,35 +69,81 @@ public class Usersdashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        bookbtn = new javax.swing.JButton();
         logoutbtn = new javax.swing.JButton();
+        cnclbtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        trainschedule = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Book");
+        bookbtn.setText("Book");
+        bookbtn.addActionListener(this::bookbtnActionPerformed);
 
         logoutbtn.setText("Logout");
         logoutbtn.addActionListener(this::logoutbtnActionPerformed);
+
+        cnclbtn.setText("Cancel");
+        cnclbtn.addActionListener(this::cnclbtnActionPerformed);
+
+        trainschedule.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Train no", "Start", "Destination", "Date", "Time", "Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        trainschedule.setRowSelectionAllowed(false);
+        jScrollPane1.setViewportView(trainschedule);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(bookbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103)
+                        .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(cnclbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(102, 102, 102))
+                    .addComponent(cnclbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(149, 149, 149))
         );
 
         pack();
@@ -71,6 +156,20 @@ public class Usersdashboard extends javax.swing.JFrame {
         loguser.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutbtnActionPerformed
+
+    private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
+        // TODO add your handling code here:
+        bookpassenger books=new bookpassenger(this.loguser);
+        books.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bookbtnActionPerformed
+
+    private void cnclbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnclbtnActionPerformed
+        // TODO add your handling code here:
+        Canceloder oder=new Canceloder(this.loguser);
+        oder.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cnclbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,7 +197,10 @@ public class Usersdashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bookbtn;
+    private javax.swing.JButton cnclbtn;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutbtn;
+    private javax.swing.JTable trainschedule;
     // End of variables declaration//GEN-END:variables
 }
