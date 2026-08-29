@@ -27,6 +27,8 @@ public class Usersdashboard extends javax.swing.JFrame {
     
     public Usersdashboard() {
         initComponents();
+        tableloaddata();
+
         
     }
     public Usersdashboard(String username) {
