@@ -1,0 +1,2 @@
+main is trainbooking
+make sure to have mysql installed and also make sure to configure the databaseconnector java file and to run thr sql file in my sql.
