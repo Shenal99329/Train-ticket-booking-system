@@ -52,6 +52,9 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jPanel1.putClientProperty(&quot;FlatLaf.style&quot;, &quot;arc: 30&quot;);"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -204,6 +207,9 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="jPanel2.putClientProperty(&quot;FlatLaf.style&quot;, &quot;arc: 30&quot;);"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">

@@ -117,12 +117,14 @@ public class bookpassenger extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel1.putClientProperty("FlatLaf.style", "arc: 30");
         jScrollPane1 = new javax.swing.JScrollPane();
         booktrain = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         classtble = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel2.putClientProperty("FlatLaf.style", "arc: 30");
         jLabel1 = new javax.swing.JLabel();
         uname = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
